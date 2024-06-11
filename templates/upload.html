@@ -1,0 +1,131 @@
+<!-- upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Imagica</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #f0f0f0, #e6e6e6);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="file"] {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            min-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Imagica</h1>
+        <form action="/" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="custom-file mb-3">
+                <input type="file" class="custom-file-input" id="fileInput" name="file" accept=".png, .jpg, .jpeg, .pdf" required>
+                <label class="custom-file-label" for="fileInput">Choose file</label>
+                <div class="invalid-feedback">Please choose a file.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+        <div id="output" style="display: none;"></div>
+
+        <div id="options" style="display: none;">
+            <button id="editBtn" class="btn btn-secondary">Edit</button>
+            <button id="saveBtn" class="btn btn-success">Save</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Add active class to custom file input when file is selected
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            var fileName = document.getElementById('fileInput').files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+
+            // Display uploaded file
+            var outputDiv = document.getElementById('output');
+            outputDiv.style.display = 'block';
+            outputDiv.innerHTML = '<h3>Input Image:</h3><img src="' + URL.createObjectURL(e.target.files[0]) + '" style="max-width: 100%;">';
+
+            // Display options
+            var optionsDiv = document.getElementById('options');
+            optionsDiv.style.display = 'block';
+        });
+
+        // Edit button click event
+        document.getElementById('editBtn').addEventListener('click', function() {
+            // Enable editing of output text
+            var outputText = document.querySelector('#output pre');
+            outputText.contentEditable = true;
+            outputText.focus();
+        });
+
+        // Save button click event
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            // Disable editing of output text
+            var outputText = document.querySelector('#output pre');
+            outputText.contentEditable = false;
+            outputText.blur();
+        });
+    </script>
+</body>
+</html>
